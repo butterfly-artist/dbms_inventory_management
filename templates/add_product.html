@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Add Product - Inventory{% endblock %}
+{% block content %}
+<h1 class="mb-3">Add Product</h1>
+<form method="post">
+  <div class="mb-3">
+    <label for="sku" class="form-label">SKU</label>
+    <input type="text" name="sku" id="sku" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <input type="text" name="category" id="category" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="unit_price" class="form-label">Unit Price</label>
+    <input type="number" step="0.01" name="unit_price" id="unit_price" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="reorder_level" class="form-label">Reorder Level</label>
+    <input type="number" name="reorder_level" id="reorder_level" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="{{ url_for('products') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

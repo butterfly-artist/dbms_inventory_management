@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Stock - Inventory{% endblock %}
+{% block content %}
+<h1 class="mb-3">Stock by Product and Warehouse</h1>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Product SKU</th>
+      <th>Product Name</th>
+      <th>Warehouse</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.product_sku }}</td>
+      <td>{{ r.product_name }}</td>
+      <td>{{ r.warehouse_name }}</td>
+      <td>{{ r.quantity }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

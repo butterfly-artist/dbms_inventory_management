@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Add Supplier - Inventory{% endblock %}
+{% block content %}
+<h1 class="mb-3">Add Supplier</h1>
+<form method="post">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="contact_person" class="form-label">Contact Person</label>
+    <input type="text" name="contact_person" id="contact_person" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input type="text" name="phone" id="phone" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" name="email" id="email" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="{{ url_for('suppliers') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

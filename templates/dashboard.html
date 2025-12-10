@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Inventory{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="mb-0">Dashboard</h2>
+    <small class="text-muted">Overview of inventory, suppliers, warehouses and stock</small>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-semibold">Total Products</span>
+          <span class="badge bg-primary rounded-pill">P</span>
+        </div>
+        <h3 class="mb-0">{{ counts.products }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-semibold">Suppliers</span>
+          <span class="badge bg-success rounded-pill">S</span>
+        </div>
+        <h3 class="mb-0">{{ counts.suppliers }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-semibold">Warehouses</span>
+          <span class="badge bg-warning rounded-pill">W</span>
+        </div>
+        <h3 class="mb-0">{{ counts.warehouses }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-semibold">Low Stock Items</span>
+          <span class="badge bg-danger rounded-pill">!</span>
+        </div>
+        <h3 class="mb-0">{{ counts.low_stock }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Inventory by Category</h5>
+        <canvas id="categoryChart" height="140"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Quick Links</h5>
+        <div class="list-group list-group-flush">
+          <a href="{{ url_for('products') }}" class="list-group-item list-group-item-action">Manage Products</a>
+          <a href="{{ url_for('suppliers') }}" class="list-group-item list-group-item-action">Manage Suppliers</a>
+          <a href="{{ url_for('warehouses') }}" class="list-group-item list-group-item-action">Manage Warehouses</a>
+          <a href="{{ url_for('purchase_orders') }}" class="list-group-item list-group-item-action">Record Purchase (Receive)</a>
+          <a href="{{ url_for('sales_orders') }}" class="list-group-item list-group-item-action">Record Sale (Dispatch)</a>
+          <a href="{{ url_for('low_stock_report') }}" class="list-group-item list-group-item-action">Low Stock Report</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  const categoryLabels = {{ category_labels|tojson }};
+  const categoryData = {{ category_values|tojson }};
+
+  const ctx = document.getElementById('categoryChart');
+  if (ctx && categoryLabels.length > 0) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: categoryLabels,
+        datasets: [{
+          label: 'Total Quantity',
+          data: categoryData,
+          backgroundColor: '#0d6efd',
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  }
+</script>
+{% endblock %}
